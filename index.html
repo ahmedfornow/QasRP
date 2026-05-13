@@ -371,7 +371,7 @@ function buildIndirectBlock(opts) {
 
 // Build DS block (single promoter, off Sunday=0)
 function buildDSBlock(opts) {
-  const { id, name, unicode, outlet, mapUrl } = opts;
+  const { id, name, unicode, outlet, mapUrl, sickLeave } = opts;
   const active = todayIdx !== 0 && !opts.sickLeave;
   const panelId = id + '_panel';
   const chevId  = id + '_chev';

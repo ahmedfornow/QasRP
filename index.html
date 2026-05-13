@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Qassim – Weekly Route Plan (May 2026)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --card: #1a1e2e;
+    --border: #252a3a;
+    --accent: #4f8ef7;
+    --accent2: #f7a44f;
+    --accent3: #4ff7a4;
+    --accent-night: #9b6bff;
+    --text: #e8eaf2;
+    --muted: #7a82a0;
+    --day-off-bg: #2a1f1f;
+    --day-off-text: #e05c5c;
+    --ds-accent: #f74f8e;
+    --active-color: #4ff7a4;
+    --inactive-color: #e05c5c;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* HEADER */
+  header {
+    position: relative; overflow: hidden;
+    padding: 48px 24px 36px; text-align: center;
+    background: linear-gradient(135deg, #0d0f14 0%, #111626 60%, #0d1420 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(79,142,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(79,142,247,0.15); border: 1px solid rgba(79,142,247,0.3);
+    color: var(--accent); font-size: 11px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
+  }
+  header h1 { font-size: clamp(1.4rem, 4vw, 2.4rem); font-weight: 700; color: #fff; }
+  header h1 span { color: var(--accent); }
+  header p.subtitle { margin-top: 8px; color: var(--muted); font-size: 13px; font-weight: 300; }
+
+  .toggle-btn {
+    position: absolute; top: 18px; right: 18px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); border-radius: 20px;
+    padding: 6px 14px; font-size: 12px; cursor: pointer;
+    font-family: 'Sora', sans-serif; transition: background .2s;
+  }
+  .toggle-btn:hover { background: var(--border); }
+
+  /* NOTICE */
+  .notice { margin: 20px auto; max-width: 960px; padding: 0 16px; }
+  .notice-inner {
+    background: rgba(247,164,79,0.08); border: 1px solid rgba(247,164,79,0.25);
+    border-radius: 12px; padding: 14px 18px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .notice-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .notice-text { font-size: 13px; line-height: 1.6; color: #d4b483; }
+  .notice-text strong { color: var(--accent2); }
+
+  /* SECTION LABEL */
+  .section-label {
+    max-width: 960px; margin: 32px auto 12px; padding: 0 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label-line { flex: 1; height: 1px; background: var(--border); }
+  .section-label-text {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* PROMOTER BLOCK */
+  .promoter-block {
+    max-width: 960px; margin: 0 auto 16px; padding: 0 16px;
+  }
+  .promoter-wrap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+  }
+
+  /* SHIFT HEADER ROW (clickable) */
+  .shift-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; user-select: none;
+  }
+  .shift-header:last-child { border-bottom: none; }
+  .shift-emoji { font-size: 18px; flex-shrink: 0; }
+  .shift-name { font-size: 14px; font-weight: 600; color: #fff; flex: 1; }
+  .shift-type-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 9px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0;
+  }
+  .badge-day   { background: rgba(79,142,247,0.15); color: #7ab3ff; border: 1px solid rgba(79,142,247,0.3); }
+  .badge-night { background: rgba(155,107,255,0.15); color: #c4aaff; border: 1px solid rgba(155,107,255,0.3); }
+  .badge-ds    { background: rgba(247,79,142,0.15);  color: #ff88bb; border: 1px solid rgba(247,79,142,0.3); }
+  .shift-chevron { color: var(--muted); font-size: 13px; transition: transform .25s; flex-shrink: 0; }
+  .shift-panel.open ~ .shift-header .shift-chevron,
+  .shift-header.open .shift-chevron { transform: rotate(180deg); }
+
+  /* INFO PANEL */
+  .shift-panel {
+    display: none;
+    padding: 14px 18px 16px;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.15);
+    flex-direction: column;
+    gap: 10px;
+  }
+  .shift-panel.open { display: flex; }
+
+  /* INFO ROWS */
+  .info-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px;
+  }
+  .info-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted); width: 72px; flex-shrink: 0;
+  }
+  .info-value { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  /* ACTIVE BADGE */
+  .active-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .active-badge.yes {
+    background: rgba(79,247,164,0.1); color: var(--active-color);
+    border: 1px solid rgba(79,247,164,0.25);
+  }
+  .active-badge.no {
+    background: rgba(224,92,92,0.1); color: var(--inactive-color);
+    border: 1px solid rgba(224,92,92,0.25);
+  }
+  .active-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .active-badge.yes .active-dot { background: var(--active-color); }
+  .active-badge.no .active-dot  { background: var(--inactive-color); }
+
+  /* UNICODE */
+  .unicode-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent3);
+    background: rgba(79,247,164,0.06);
+    border: 1px solid rgba(79,247,164,0.15);
+    padding: 3px 9px; border-radius: 6px;
+  }
+
+  /* OUTLET */
+  .outlet-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--muted);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    padding: 3px 9px; border-radius: 6px;
+    word-break: break-all;
+  }
+
+  /* MAP LINK */
+  .map-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    text-decoration: none; padding: 5px 12px;
+    border-radius: 8px;
+    background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25);
+    transition: background .15s;
+  }
+  .map-btn:hover { background: rgba(79,142,247,0.22); }
+  .map-icon { font-size: 15px; }
+
+  /* DIVIDER between day and night within same block */
+  .shift-divider {
+    height: 1px; background: var(--border); margin: 0;
+  }
+
+  /* OUTLET LABEL above block */
+  .outlet-label-bar {
+    padding: 10px 18px 8px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .outlet-label-unicode {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent3); opacity: .8;
+  }
+  .outlet-label-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--muted); flex: 1;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  footer {
+    text-align: center; color: var(--muted);
+    font-size: 11px; margin-top: 40px; padding: 0 16px; line-height: 1.8;
+  }
+
+  /* LIGHT MODE */
+  body.light {
+    --bg: #f0f2f8; --card: #fff; --border: #dde1ef;
+    --text: #1a1e2e; --muted: #6b7491;
+  }
+  body.light header { background: linear-gradient(135deg, #e8edf8, #dce4f5); border-color: #cdd5e8; }
+  body.light .shift-panel { background: rgba(0,0,0,0.02); }
+  body.light .outlet-chip { color: #555c7a; }
+
+  @media (max-width: 600px) {
+    .shift-name { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="toggle-btn" onclick="document.body.classList.toggle('light')">🌙 Toggle Mode</button>
+  <div class="header-badge">May 2026</div>
+  <h1>Qassim – <span>Weekly Route Plan</span></h1>
+  <p class="subtitle">Weekly pattern (Sunday → Saturday) · Tap a promoter to see details</p>
+</header>
+
+<div class="notice">
+  <div class="notice-inner">
+    <span class="notice-icon">💡</span>
+    <div class="notice-text">
+      <strong>Shift Rules:</strong>
+      ☀️ Day <strong>(8AM–4PM)</strong> off: <strong>Saturday</strong> &nbsp;·&nbsp;
+      🌙 Night <strong>(4PM–12AM)</strong> off: <strong>Friday</strong> &nbsp;·&nbsp;
+      On <strong>Friday</strong> the Day promoter covers the Night shift &nbsp;·&nbsp;
+      📋 DS off: <strong>Sunday</strong>
+    </div>
+  </div>
+</div>
+
+<!-- INDIRECT SELLS -->
+<div class="section-label">
+  <div class="section-label-line"></div>
+  <span class="section-label-text">Indirect Sells — Dual Shift</span>
+  <div class="section-label-line"></div>
+</div>
+<div id="indirect-container"></div>
+
+<!-- DIRECT SELLS -->
+<div class="section-label">
+  <div class="section-label-line"></div>
+  <span class="section-label-text">Direct Sells — DS Promoters</span>
+  <div class="section-label-line"></div>
+</div>
+<div id="ds-container"></div>
+
+<footer>
+  <p>Qassim Weekly Route Plan · May 2026</p>
+  <p style="margin-top:4px">☀️ Day off: <strong>Saturday</strong> &nbsp;|&nbsp; 🌙 Night off: <strong>Friday</strong> &nbsp;|&nbsp; 📋 DS off: <strong>Sunday</strong></p>
+</footer>
+
+<script>
+// Today's day index (0=Sun … 6=Sat)
+const todayIdx = new Date().getDay();
+
+// Is this promoter active today?
+// dayOff: day index when they're off
+function isActive(dayOff) {
+  return todayIdx !== dayOff;
+}
+
+// Toggle panel
+function toggle(panelId, chevronId) {
+  const panel = document.getElementById(panelId);
+  const chev  = document.getElementById(chevronId);
+  panel.classList.toggle('open');
+  if (chev) chev.style.transform = panel.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+function activeBadge(active) {
+  return active
+    ? `<span class="active-badge yes"><span class="active-dot"></span>Active Today</span>`
+    : `<span class="active-badge no"><span class="active-dot"></span>Off Today</span>`;
+}
+
+function infoPanel(id, opts) {
+  const { unicode, outlet, mapUrl, active } = opts;
+  return `
+  <div class="shift-panel" id="${id}">
+    <div class="info-row">
+      <span class="info-label">Active?</span>
+      ${activeBadge(active)}
+    </div>
+    <div class="info-row">
+      <span class="info-label">Unicode</span>
+      <span class="unicode-chip">${unicode}</span>
+    </div>
+    <div class="info-row" style="align-items:flex-start">
+      <span class="info-label">Outlet</span>
+      <span class="outlet-chip">${outlet}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Location</span>
+      <a class="map-btn" href="${mapUrl}" target="_blank">
+        <span class="map-icon">📍</span> Open Google Maps
+      </a>
+    </div>
+  </div>`;
+}
+
+// Build indirect block (day + night in same card)
+function buildIndirectBlock(opts) {
+  const { id, unicode, outlet, mapUrl, dayName, nightName } = opts;
+
+  // Day off = SAT (6), Night off = FRI (5)
+  // On Friday: day covers night → day is "active" (working night), night is off
+  const dayActiveFri  = todayIdx === 5; // Friday: day covers
+  const nightOffFri   = todayIdx === 5;
+  const dayOffSat     = todayIdx === 6;
+
+  const dayActive   = todayIdx !== 6; // day off on SAT
+  const nightActive = todayIdx !== 5; // night off on FRI
+
+  const dayPanelId   = id + '_day_panel';
+  const nightPanelId = id + '_night_panel';
+  const dayChevId    = id + '_day_chev';
+  const nightChevId  = id + '_night_chev';
+
+  return `
+  <div class="promoter-block">
+    <div class="promoter-wrap">
+      <!-- Outlet info bar -->
+      <div class="outlet-label-bar">
+        <span class="outlet-label-unicode">${unicode}</span>
+        <span class="outlet-label-name">${outlet}</span>
+      </div>
+
+      <!-- Day promoter row -->
+      <div class="shift-header" onclick="toggle('${dayPanelId}','${dayChevId}')">
+        <span class="shift-emoji">☀️</span>
+        <span class="shift-name">${dayName}</span>
+        <span class="shift-type-badge badge-day">Day</span>
+        <span class="shift-chevron" id="${dayChevId}">▼</span>
+      </div>
+      ${infoPanel(dayPanelId, { unicode, outlet, mapUrl, active: dayActive })}
+
+      <div class="shift-divider"></div>
+
+      <!-- Night promoter row -->
+      <div class="shift-header" onclick="toggle('${nightPanelId}','${nightChevId}')">
+        <span class="shift-emoji">🌙</span>
+        <span class="shift-name">${nightName}</span>
+        <span class="shift-type-badge badge-night">Night</span>
+        <span class="shift-chevron" id="${nightChevId}">▼</span>
+      </div>
+      ${infoPanel(nightPanelId, { unicode, outlet, mapUrl, active: nightActive })}
+    </div>
+  </div>`;
+}
+
+// Build DS block (single promoter, off Sunday=0)
+function buildDSBlock(opts) {
+  const { id, name, unicode, outlet, mapUrl } = opts;
+  const active = todayIdx !== 0;
+  const panelId = id + '_panel';
+  const chevId  = id + '_chev';
+
+  return `
+  <div class="promoter-block">
+    <div class="promoter-wrap">
+      <div class="shift-header" onclick="toggle('${panelId}','${chevId}')">
+        <span class="shift-emoji">📋</span>
+        <span class="shift-name">${name}</span>
+        <span class="shift-type-badge badge-ds">DS</span>
+        <span class="shift-chevron" id="${chevId}">▼</span>
+      </div>
+      ${infoPanel(panelId, { unicode, outlet, mapUrl, active })}
+    </div>
+  </div>`;
+}
+
+// ── DATA ──────────────────────────────────────────────────────
+
+const indirectOutlets = [
+  { id:'c1', unicode:'96612462113005', outlet:'QAS_Al-Ghada Super Market_DS_MN_BR',      mapUrl:'https://maps.app.goo.gl/sCcHKr1EJTStTtfk7', dayName:'Mohammed Shwahna',       nightName:'Abdelghafour AlHunaidy' },
+  { id:'c2', unicode:'96612462117894', outlet:'QAS_Nakhlath Al Mazaj_SIS(TB)_MN_BR',     mapUrl:'https://maps.app.goo.gl/HBT6Z5mzPKzyP4TUA', dayName:'Ebrahim Ali Bati',       nightName:'Mohammed Al Sulaiman' },
+  { id:'c3', unicode:'966124622652',   outlet:'QAS_Tamimi Al Raas S194_DS_MN_BR',        mapUrl:'https://maps.app.goo.gl/9HCxfXdyjFrSGZeaA', dayName:'Ali Alsubaie',           nightName:'Hamad Khlawe' },
+  { id:'c4', unicode:'966124622651',   outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',         mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8', dayName:'Ayman Sadhan',           nightName:'Yazeed Mohammed Mansour' },
+  { id:'c5', unicode:'966124622650',   outlet:'QAS_Tamimi Buraydah_IP_MN_BR',            mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9', dayName:'Khaled Saleh AL Wakkaa', nightName:'Metab Fahd Amri' },
+];
+
+const dsPromoters = [
+  { id:'ds1', name:'Mohsen Ayoob',            unicode:'96612462118585', outlet:'QAS_Sharikath Bayth Almudahin 2_BR-DS(TB)_MN_BR', mapUrl:'https://maps.app.goo.gl/kYu58G7akzsWR3ug9' },
+  { id:'ds2', name:'Yousef Ahmed Hasan',       unicode:'96612462118582', outlet:'QAS_Riadat Alostoura 1_BR-DS(TB)_MN_BR',         mapUrl:'https://maps.app.goo.gl/ekjP7Lz3UGZPHtGv6?g_st=ic' },
+  { id:'ds3', name:'Mohamed Ahmed Abdelwahab', unicode:'96612462118583', outlet:'QAS_Riyadat Alostoura 2_BR-DS(TB)_MN_BR',        mapUrl:'https://maps.app.goo.gl/MkXwetmf7fm9zRrQ8?g_st=ic' },
+];
+
+document.getElementById('indirect-container').innerHTML =
+  indirectOutlets.map(o => buildIndirectBlock(o)).join('');
+
+document.getElementById('ds-container').innerHTML =
+  dsPromoters.map(p => buildDSBlock(p)).join('');
+</script>
+</body>
+</html>

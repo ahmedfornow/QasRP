@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Qassim – Weekly Route Plan (May 2026)</title>
+<title>Qassim – Eid Route Plan</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -16,7 +16,6 @@
     --accent-night: #9b6bff;
     --text: #e8eaf2;
     --muted: #7a82a0;
-    --day-off-bg: #2a1f1f;
     --day-off-text: #e05c5c;
     --ds-accent: #f74f8e;
     --active-color: #4ff7a4;
@@ -32,29 +31,34 @@
     padding-bottom: 60px;
   }
 
-  /* HEADER */
+  /* ── HEADER ── */
   header {
     position: relative; overflow: hidden;
-    padding: 48px 24px 36px; text-align: center;
+    padding: 52px 24px 40px; text-align: center;
     background: linear-gradient(135deg, #0d0f14 0%, #111626 60%, #0d1420 100%);
     border-bottom: 1px solid var(--border);
   }
   header::before {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(79,142,247,0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(79,142,247,0.10) 0%, transparent 70%);
     pointer-events: none;
   }
   .header-badge {
     display: inline-block;
-    background: rgba(79,142,247,0.15); border: 1px solid rgba(79,142,247,0.3);
+    background: rgba(79,142,247,0.12); border: 1px solid rgba(79,142,247,0.25);
     color: var(--accent); font-size: 11px; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase;
-    padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 4px 16px; border-radius: 20px; margin-bottom: 16px;
   }
-  header h1 { font-size: clamp(1.4rem, 4vw, 2.4rem); font-weight: 700; color: #fff; }
+  header h1 {
+    font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+    font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1.15;
+  }
   header h1 span { color: var(--accent); }
-  header p.subtitle { margin-top: 8px; color: var(--muted); font-size: 13px; font-weight: 300; }
-
+  header p.subtitle {
+    margin-top: 10px; color: var(--muted);
+    font-size: 12.5px; font-weight: 300; letter-spacing: 0.3px;
+  }
   .toggle-btn {
     position: absolute; top: 18px; right: 18px;
     background: var(--card); border: 1px solid var(--border);
@@ -64,187 +68,236 @@
   }
   .toggle-btn:hover { background: var(--border); }
 
-  /* NOTICE */
-  .notice { margin: 20px auto; max-width: 960px; padding: 0 16px; }
-  .notice-inner {
-    background: rgba(247,164,79,0.08); border: 1px solid rgba(247,164,79,0.25);
-    border-radius: 12px; padding: 14px 18px;
-    display: flex; gap: 10px; align-items: flex-start;
+  /* ── COUNTER CARD ── */
+  .counter-wrap { max-width: 960px; margin: 22px auto 0; padding: 0 16px; }
+  .counter-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px 24px;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
   }
-  .notice-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .notice-text { font-size: 13px; line-height: 1.6; color: #d4b483; }
-  .notice-text strong { color: var(--accent2); }
+  .counter-main { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 180px; }
+  .counter-number {
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    font-weight: 700; line-height: 1; color: var(--active-color);
+    font-family: 'JetBrains Mono', monospace; letter-spacing: -1px;
+  }
+  .counter-label-block { display: flex; flex-direction: column; gap: 3px; }
+  .counter-label-top { font-size: 13px; font-weight: 600; color: var(--text); }
+  .counter-label-sub { font-size: 11px; color: var(--muted); font-weight: 300; }
+  .counter-breakdown { display: flex; gap: 10px; flex-wrap: wrap; }
+  .breakdown-chip {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+  }
+  .breakdown-chip .chip-count { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; }
+  .chip-night .chip-count { color: #c4aaff; }
+  .chip-day   .chip-count { color: #7ab3ff; }
+  .chip-ds    .chip-count { color: #ff88bb; }
+  .chip-off   .chip-count { color: var(--inactive-color); }
+  .counter-divider { width: 1px; height: 48px; background: var(--border); flex-shrink: 0; }
+  .today-label {
+    font-size: 11px; color: var(--muted); text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .today-day {
+    font-size: 18px; font-weight: 700; color: var(--text);
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;
+  }
 
-  /* SECTION LABEL */
+  /* ── SHIFT RULES BAR ── */
+  .rules-bar { max-width: 960px; margin: 14px auto 0; padding: 0 16px; }
+  .rules-inner {
+    display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 11px 18px;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+    border-radius: 10px; font-size: 11.5px; color: var(--muted);
+  }
+  .rules-inner span { display: flex; align-items: center; gap: 5px; }
+  .rules-inner strong { color: var(--text); font-weight: 600; }
+
+  /* ── SECTION LABEL ── */
   .section-label {
-    max-width: 960px; margin: 32px auto 12px; padding: 0 16px;
+    max-width: 960px; margin: 30px auto 10px; padding: 0 16px;
     display: flex; align-items: center; gap: 10px;
   }
   .section-label-line { flex: 1; height: 1px; background: var(--border); }
-  .section-label-text {
-    font-size: 11px; font-weight: 600; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted);
-  }
+  .section-label-text { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
 
-  /* PROMOTER BLOCK */
-  .promoter-block {
-    max-width: 960px; margin: 0 auto 16px; padding: 0 16px;
-  }
-  .promoter-wrap {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; overflow: hidden;
-  }
+  /* ── PROMOTER BLOCK ── */
+  .promoter-block { max-width: 960px; margin: 0 auto 14px; padding: 0 16px; }
+  .promoter-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 
-  /* SHIFT HEADER ROW (clickable) */
+  .outlet-label-bar {
+    padding: 9px 18px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02);
+  }
+  .outlet-label-unicode { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent3); opacity: .75; flex-shrink: 0; }
+  .outlet-label-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
   .shift-header {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px 18px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer; user-select: none;
+    display: flex; align-items: center; gap: 10px; padding: 12px 18px;
+    cursor: pointer; user-select: none; transition: background .15s;
   }
-  .shift-header:last-child { border-bottom: none; }
-  .shift-emoji { font-size: 18px; flex-shrink: 0; }
+  .shift-header:hover { background: rgba(255,255,255,0.025); }
+  .shift-divider { height: 1px; background: var(--border); }
+  .shift-emoji { font-size: 17px; flex-shrink: 0; }
   .shift-name { font-size: 14px; font-weight: 600; color: #fff; flex: 1; }
-  .shift-type-badge {
-    font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    padding: 3px 9px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0;
-  }
-  .badge-day   { background: rgba(79,142,247,0.15); color: #7ab3ff; border: 1px solid rgba(79,142,247,0.3); }
-  .badge-night { background: rgba(155,107,255,0.15); color: #c4aaff; border: 1px solid rgba(155,107,255,0.3); }
-  .badge-ds    { background: rgba(247,79,142,0.15);  color: #ff88bb; border: 1px solid rgba(247,79,142,0.3); }
-  .shift-chevron { color: var(--muted); font-size: 13px; transition: transform .25s; flex-shrink: 0; }
-  .shift-panel.open ~ .shift-header .shift-chevron,
-  .shift-header.open .shift-chevron { transform: rotate(180deg); }
+  .shift-type-badge { font-size: 9.5px; font-weight: 700; letter-spacing: 1px; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0; }
+  .badge-day   { background: rgba(79,142,247,0.13); color: #7ab3ff; border: 1px solid rgba(79,142,247,0.28); }
+  .badge-night { background: rgba(155,107,255,0.13); color: #c4aaff; border: 1px solid rgba(155,107,255,0.28); }
+  .badge-ds    { background: rgba(247,79,142,0.13);  color: #ff88bb; border: 1px solid rgba(247,79,142,0.28); }
+  .shift-chevron { color: var(--muted); font-size: 12px; transition: transform .25s; flex-shrink: 0; }
 
-  /* INFO PANEL */
   .shift-panel {
-    display: none;
-    padding: 14px 18px 16px;
-    border-top: 1px solid var(--border);
-    background: rgba(0,0,0,0.15);
-    flex-direction: column;
-    gap: 10px;
+    display: none; padding: 13px 18px 15px; border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.18); flex-direction: column; gap: 10px;
   }
   .shift-panel.open { display: flex; }
 
-  /* INFO ROWS */
-  .info-row {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 12px;
-  }
-  .info-label {
-    font-size: 10px; font-weight: 600; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--muted); width: 72px; flex-shrink: 0;
-  }
-  .info-value { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .info-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .info-row.top { align-items: flex-start; }
+  .info-label { font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); width: 68px; flex-shrink: 0; }
 
-  /* ACTIVE BADGE */
-  .active-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 11px; font-weight: 600; padding: 3px 10px;
-    border-radius: 20px;
-  }
-  .active-badge.yes {
-    background: rgba(79,247,164,0.1); color: var(--active-color);
-    border: 1px solid rgba(79,247,164,0.25);
-  }
-  .active-badge.no {
-    background: rgba(224,92,92,0.1); color: var(--inactive-color);
-    border: 1px solid rgba(224,92,92,0.25);
-  }
-  .active-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .active-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .active-badge.yes { background: rgba(79,247,164,0.09); color: var(--active-color); border: 1px solid rgba(79,247,164,0.22); }
+  .active-badge.no  { background: rgba(224,92,92,0.09);  color: var(--inactive-color); border: 1px solid rgba(224,92,92,0.22); }
+  .active-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .active-badge.yes .active-dot { background: var(--active-color); }
-  .active-badge.no .active-dot  { background: var(--inactive-color); }
+  .active-badge.no  .active-dot { background: var(--inactive-color); }
 
-  /* UNICODE */
-  .unicode-chip {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--accent3);
-    background: rgba(79,247,164,0.06);
-    border: 1px solid rgba(79,247,164,0.15);
-    padding: 3px 9px; border-radius: 6px;
-  }
-
-  /* OUTLET */
-  .outlet-chip {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px; color: var(--muted);
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    padding: 3px 9px; border-radius: 6px;
-    word-break: break-all;
-  }
-
-  /* MAP LINK */
+  .unicode-chip { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent3); background: rgba(79,247,164,0.05); border: 1px solid rgba(79,247,164,0.14); padding: 3px 9px; border-radius: 6px; }
+  .outlet-chip  { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 3px 9px; border-radius: 6px; word-break: break-all; }
   .map-btn {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600;
+    color: var(--accent); text-decoration: none; padding: 5px 12px; border-radius: 8px;
+    background: rgba(79,142,247,0.09); border: 1px solid rgba(79,142,247,0.22); transition: background .15s;
+  }
+  .map-btn:hover { background: rgba(79,142,247,0.2); }
+
+  /* ── EID NOTICE ── */
+  .eid-notice { max-width: 960px; margin: 14px auto 0; padding: 0 16px; }
+  .eid-notice-inner {
+    display: flex; align-items: center; gap: 12px; padding: 13px 18px;
+    background: rgba(155,107,255,0.07); border: 1px solid rgba(155,107,255,0.22);
+    border-radius: 10px; flex-wrap: wrap;
+  }
+  .eid-notice-icon { font-size: 20px; flex-shrink: 0; }
+  .eid-notice-text { font-size: 12.5px; color: #c4aaff; line-height: 1.6; flex: 1; }
+  .eid-notice-text strong { color: #dac8ff; font-weight: 700; }
+  .eid-name-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(155,107,255,0.15); border: 1px solid rgba(155,107,255,0.3);
+    color: #dac8ff; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px;
+  }
+
+  /* ── EID LEAVE ROW ── */
+  .badge-eid-leave {
+    background: rgba(155,107,255,0.13); color: #c4aaff;
+    border: 1px solid rgba(155,107,255,0.28);
+    font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 9px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0;
+  }
+  .eid-leave-row { opacity: 0.72; }
+  .eid-leave-row .shift-name { color: #c4aaff; }
+  .eid-leave-panel {
+    display: none; padding: 13px 18px 15px;
+    border-top: 1px solid rgba(155,107,255,0.18);
+    background: rgba(155,107,255,0.05);
+    flex-direction: column; gap: 10px;
+  }
+  .eid-leave-panel.open { display: flex; }
+  .eid-leave-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 600; color: var(--accent);
-    text-decoration: none; padding: 5px 12px;
-    border-radius: 8px;
-    background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25);
-    transition: background .15s;
-  }
-  .map-btn:hover { background: rgba(79,142,247,0.22); }
-  .map-icon { font-size: 15px; }
-
-  /* DIVIDER between day and night within same block */
-  .shift-divider {
-    height: 1px; background: var(--border); margin: 0;
+    font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;
+    background: rgba(155,107,255,0.12); color: #c4aaff; border: 1px solid rgba(155,107,255,0.28);
   }
 
-  /* OUTLET LABEL above block */
-  .outlet-label-bar {
-    padding: 10px 18px 8px;
-    display: flex; align-items: center; gap: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-  .outlet-label-unicode {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: var(--accent3); opacity: .8;
-  }
-  .outlet-label-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: var(--muted); flex: 1;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-
+  /* ── FOOTER ── */
   footer {
     text-align: center; color: var(--muted);
-    font-size: 11px; margin-top: 40px; padding: 0 16px; line-height: 1.8;
+    font-size: 11px; margin-top: 44px; padding: 20px 16px 0;
+    border-top: 1px solid var(--border); line-height: 2;
   }
+  footer strong { color: var(--text); }
 
-  /* LIGHT MODE */
-  body.light {
-    --bg: #f0f2f8; --card: #fff; --border: #dde1ef;
-    --text: #1a1e2e; --muted: #6b7491;
-  }
+  /* ── LIGHT MODE ── */
+  body.light { --bg: #f0f2f8; --card: #fff; --border: #dde1ef; --text: #1a1e2e; --muted: #6b7491; }
   body.light header { background: linear-gradient(135deg, #e8edf8, #dce4f5); border-color: #cdd5e8; }
   body.light .shift-panel { background: rgba(0,0,0,0.02); }
   body.light .outlet-chip { color: #555c7a; }
+  body.light .rules-inner { background: rgba(0,0,0,0.02); }
+  body.light .outlet-label-bar { background: rgba(0,0,0,0.02); }
+  body.light .counter-card { background: #fff; }
+  body.light .breakdown-chip { background: rgba(0,0,0,0.03); }
 
   @media (max-width: 600px) {
     .shift-name { font-size: 13px; }
+    .counter-divider { display: none; }
+    .today-label { display: none; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <button class="toggle-btn" onclick="document.body.classList.toggle('light')">🌙 Toggle Mode</button>
-  <div class="header-badge">May 2026</div>
-  <h1>Qassim – <span>Route Plan</span></h1>
-  <p class="subtitle">Weekly pattern (Sunday → Saturday) · Tap a promoter to see details</p>
+  <button class="toggle-btn" onclick="document.body.classList.toggle('light')">🌙 Toggle</button>
+  <div class="header-badge">Eid Plan · 2026</div>
+  <h1>Qassim – <span>Eid Route Plan</span></h1>
+  <p class="subtitle">Mostly Night Shift &nbsp;·&nbsp; Tap a promoter row to expand details</p>
 </header>
 
-<div class="notice">
-  <div class="notice-inner">
-    <span class="notice-icon">💡</span>
-    <div class="notice-text">
-      <strong>Shift Rules:</strong>
-      ☀️ Day <strong>(8AM–4PM)</strong> off: <strong>Saturday</strong> &nbsp;·&nbsp;
-      🌙 Night <strong>(4PM–12AM)</strong> off: <strong>Friday</strong> &nbsp;·&nbsp;
-      On <strong>Friday</strong> the Day promoter covers the Night shift &nbsp;·&nbsp;
-      📋 DS off: <strong>Sunday</strong>
+<!-- COUNTER -->
+<div class="counter-wrap">
+  <div class="counter-card">
+    <div class="counter-main">
+      <div class="counter-number" id="counter-total">—</div>
+      <div class="counter-label-block">
+        <div class="counter-label-top">Working Today</div>
+        <div class="counter-label-sub" id="counter-date">—</div>
+      </div>
+    </div>
+    <div class="counter-divider"></div>
+    <div class="today-label">
+      <div class="today-day" id="today-day-name">—</div>
+      <div>Today</div>
+    </div>
+    <div class="counter-divider"></div>
+    <div class="counter-breakdown">
+      <div class="breakdown-chip chip-night">
+        <span>🌙</span><span class="chip-count" id="count-night">—</span><span style="color:var(--muted)">Night</span>
+      </div>
+      <div class="breakdown-chip chip-day">
+        <span>☀️</span><span class="chip-count" id="count-day">—</span><span style="color:var(--muted)">Day</span>
+      </div>
+      <div class="breakdown-chip chip-ds">
+        <span>📋</span><span class="chip-count" id="count-ds">—</span><span style="color:var(--muted)">DS</span>
+      </div>
+      <div class="breakdown-chip chip-off">
+        <span>🌴</span><span class="chip-count" id="count-off">—</span><span style="color:var(--muted)">Off</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RULES -->
+<div class="rules-bar">
+  <div class="rules-inner">
+    <span>☀️ Day <strong>(8AM–4PM)</strong> — off: <strong>Saturday</strong></span>
+    <span>🌙 Night <strong>(4PM–12AM)</strong> — off: <strong>Friday</strong></span>
+    <span>📋 Direct Sells — off: <strong>Sunday</strong></span>
+    <span>Friday: Day promoter covers Night shift</span>
+  </div>
+</div>
+
+<!-- EID VACATION NOTICE -->
+<div class="eid-notice">
+  <div class="eid-notice-inner">
+    <span class="eid-notice-icon">🌙✨</span>
+    <div class="eid-notice-text">
+      <strong>Eid Vacation:</strong>
+      <span class="eid-name-tag">Yazeed Mohammed Mansour</span> and
+      <span class="eid-name-tag">Metab Fahd Amri</span>
+      are currently on <strong>Eid vacation</strong> and will not be covering any shifts during this period.
     </div>
   </div>
 </div>
@@ -252,7 +305,7 @@
 <!-- INDIRECT SELLS -->
 <div class="section-label">
   <div class="section-label-line"></div>
-  <span class="section-label-text">Indirect Sells — Dual Shift</span>
+  <span class="section-label-text">Indirect Sells</span>
   <div class="section-label-line"></div>
 </div>
 <div id="indirect-container"></div>
@@ -260,30 +313,31 @@
 <!-- DIRECT SELLS -->
 <div class="section-label">
   <div class="section-label-line"></div>
-  <span class="section-label-text">Direct Sells — DS Promoters</span>
+  <span class="section-label-text">Direct Sells</span>
   <div class="section-label-line"></div>
 </div>
 <div id="ds-container"></div>
 
+<!-- EID LEAVE -->
+<div class="section-label">
+  <div class="section-label-line"></div>
+  <span class="section-label-text">🌙 Eid Vacation</span>
+  <div class="section-label-line"></div>
+</div>
+<div id="eid-leave-container"></div>
+
 <footer>
-  <p>Qassim Route Plan · May 2026</p>
-  <p style="margin-top:4px">☀️ Day off: <strong>Saturday</strong> &nbsp;|&nbsp; 🌙 Night off: <strong>Friday</strong> &nbsp;|&nbsp; 📋 DS off: <strong>Sunday</strong></p>
+  <p>Qassim Eid Route Plan &nbsp;·&nbsp; 2026</p>
+  <p>☀️ Day off: <strong>Saturday</strong> &nbsp;|&nbsp; 🌙 Night off: <strong>Friday</strong> &nbsp;|&nbsp; 📋 DS off: <strong>Sunday</strong></p>
 </footer>
 
 <script>
-// Today's day index (0=Sun … 6=Sat)
 const todayIdx = new Date().getDay();
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-// Is this promoter active today?
-// dayOff: day index when they're off
-function isActive(dayOff) {
-  return todayIdx !== dayOff;
-}
-
-// Toggle panel
-function toggle(panelId, chevronId) {
+function toggle(panelId, chevId) {
   const panel = document.getElementById(panelId);
-  const chev  = document.getElementById(chevronId);
+  const chev  = document.getElementById(chevId);
   panel.classList.toggle('open');
   if (chev) chev.style.transform = panel.classList.contains('open') ? 'rotate(180deg)' : '';
 }
@@ -294,125 +348,159 @@ function activeBadge(active) {
     : `<span class="active-badge no"><span class="active-dot"></span>Off Today</span>`;
 }
 
-function infoPanel(id, opts) {
-  const { unicode, outlet, mapUrl, active } = opts;
+function infoPanel(id, { unicode, outlet, mapUrl, active }) {
   return `
   <div class="shift-panel" id="${id}">
-    <div class="info-row">
-      <span class="info-label">Active?</span>
-      ${activeBadge(active)}
-    </div>
-    <div class="info-row">
-      <span class="info-label">Unicode</span>
-      <span class="unicode-chip">${unicode}</span>
-    </div>
-    <div class="info-row" style="align-items:flex-start">
-      <span class="info-label">Outlet</span>
-      <span class="outlet-chip">${outlet}</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Location</span>
-      <a class="map-btn" href="${mapUrl}" target="_blank">
-        <span class="map-icon">📍</span> Open Google Maps
-      </a>
-    </div>
+    <div class="info-row"><span class="info-label">Active?</span>${activeBadge(active)}</div>
+    <div class="info-row"><span class="info-label">Unicode</span><span class="unicode-chip">${unicode}</span></div>
+    <div class="info-row top"><span class="info-label">Outlet</span><span class="outlet-chip">${outlet}</span></div>
+    <div class="info-row"><span class="info-label">Location</span><a class="map-btn" href="${mapUrl}" target="_blank">📍 Open Google Maps</a></div>
   </div>`;
 }
 
-// Build indirect block (day + night in same card)
-function buildIndirectBlock(opts) {
-  const { id, unicode, outlet, mapUrl, dayName, nightName } = opts;
-
-  // Day off = SAT (6), Night off = FRI (5)
-  // On Friday: day covers night → day is "active" (working night), night is off
-  const dayActiveFri  = todayIdx === 5; // Friday: day covers
-  const nightOffFri   = todayIdx === 5;
-  const dayOffSat     = todayIdx === 6;
-
-  const dayActive   = todayIdx !== 6; // day off on SAT
-  const nightActive = todayIdx !== 5; // night off on FRI
-
-  const dayPanelId   = id + '_day_panel';
-  const nightPanelId = id + '_night_panel';
-  const dayChevId    = id + '_day_chev';
-  const nightChevId  = id + '_night_chev';
-
+function buildNightOnlyBlock(opts) {
+  const { id, unicode, outlet, mapUrl, nightName } = opts;
+  const panelId = id + '_night_panel', chevId = id + '_night_chev';
   return `
-  <div class="promoter-block">
-    <div class="promoter-wrap">
-      <!-- Outlet info bar -->
-      <div class="outlet-label-bar">
-        <span class="outlet-label-unicode">${unicode}</span>
-        <span class="outlet-label-name">${outlet}</span>
-      </div>
-
-      <!-- Day promoter row -->
-      <div class="shift-header" onclick="toggle('${dayPanelId}','${dayChevId}')">
-        <span class="shift-emoji">☀️</span>
-        <span class="shift-name">${dayName}</span>
-        <span class="shift-type-badge badge-day">Day</span>
-        <span class="shift-chevron" id="${dayChevId}">▼</span>
-      </div>
-      ${infoPanel(dayPanelId, { unicode, outlet, mapUrl, active: dayActive })}
-
-      <div class="shift-divider"></div>
-
-      <!-- Night promoter row -->
-      <div class="shift-header" onclick="toggle('${nightPanelId}','${nightChevId}')">
-        <span class="shift-emoji">🌙</span>
-        <span class="shift-name">${nightName}</span>
-        <span class="shift-type-badge badge-night">Night</span>
-        <span class="shift-chevron" id="${nightChevId}">▼</span>
-      </div>
-      ${infoPanel(nightPanelId, { unicode, outlet, mapUrl, active: nightActive })}
+  <div class="promoter-block"><div class="promoter-wrap">
+    <div class="outlet-label-bar">
+      <span class="outlet-label-unicode">${unicode}</span>
+      <span class="outlet-label-name">${outlet}</span>
     </div>
-  </div>`;
+    <div class="shift-header" onclick="toggle('${panelId}','${chevId}')">
+      <span class="shift-emoji">🌙</span>
+      <span class="shift-name">${nightName}</span>
+      <span class="shift-type-badge badge-night">Night</span>
+      <span class="shift-chevron" id="${chevId}">▼</span>
+    </div>
+    ${infoPanel(panelId, { unicode, outlet, mapUrl, active: todayIdx !== 5 })}
+  </div></div>`;
 }
 
-// Build DS block (single promoter, off Sunday=0)
+function buildDualBlock(opts) {
+  const { id, unicode, outlet, mapUrl, dayName, nightName } = opts;
+  const dpId = id+'_day_panel', npId = id+'_night_panel';
+  const dcId = id+'_day_chev',  ncId = id+'_night_chev';
+  return `
+  <div class="promoter-block"><div class="promoter-wrap">
+    <div class="outlet-label-bar">
+      <span class="outlet-label-unicode">${unicode}</span>
+      <span class="outlet-label-name">${outlet}</span>
+    </div>
+    <div class="shift-header" onclick="toggle('${dpId}','${dcId}')">
+      <span class="shift-emoji">☀️</span><span class="shift-name">${dayName}</span>
+      <span class="shift-type-badge badge-day">Day</span>
+      <span class="shift-chevron" id="${dcId}">▼</span>
+    </div>
+    ${infoPanel(dpId, { unicode, outlet, mapUrl, active: todayIdx !== 6 })}
+    <div class="shift-divider"></div>
+    <div class="shift-header" onclick="toggle('${npId}','${ncId}')">
+      <span class="shift-emoji">🌙</span><span class="shift-name">${nightName}</span>
+      <span class="shift-type-badge badge-night">Night</span>
+      <span class="shift-chevron" id="${ncId}">▼</span>
+    </div>
+    ${infoPanel(npId, { unicode, outlet, mapUrl, active: todayIdx !== 5 })}
+  </div></div>`;
+}
+
 function buildDSBlock(opts) {
   const { id, name, unicode, outlet, mapUrl, sickLeave } = opts;
-  const active = todayIdx !== 0 && !opts.sickLeave;
-  const panelId = id + '_panel';
-  const chevId  = id + '_chev';
-
+  const panelId = id+'_panel', chevId = id+'_chev';
   return `
-  <div class="promoter-block">
-    <div class="promoter-wrap">
-      <div class="shift-header" onclick="toggle('${panelId}','${chevId}')">
-        <span class="shift-emoji">📋</span>
-        <span class="shift-name">${name}</span>
-        <span class="shift-type-badge badge-ds">DS</span>
-        <span class="shift-chevron" id="${chevId}">▼</span>
-      </div>
-      ${infoPanel(panelId, { unicode, outlet, mapUrl, active })}
+  <div class="promoter-block"><div class="promoter-wrap">
+    <div class="shift-header" onclick="toggle('${panelId}','${chevId}')">
+      <span class="shift-emoji">📋</span><span class="shift-name">${name}</span>
+      <span class="shift-type-badge badge-ds">DS</span>
+      <span class="shift-chevron" id="${chevId}">▼</span>
     </div>
-  </div>`;
+    ${infoPanel(panelId, { unicode, outlet, mapUrl, active: todayIdx !== 0 && !sickLeave })}
+  </div></div>`;
 }
 
-// ── DATA ──────────────────────────────────────────────────────
+function buildEidLeaveBlock(opts) {
+  const { id, name, unicode, outlet, mapUrl } = opts;
+  const panelId = id+'_eid_panel', chevId = id+'_eid_chev';
+  return `
+  <div class="promoter-block"><div class="promoter-wrap">
+    <div class="shift-header eid-leave-row" onclick="toggle('${panelId}','${chevId}')">
+      <span class="shift-emoji">🌙</span>
+      <span class="shift-name">${name}</span>
+      <span class="badge-eid-leave">Eid Leave</span>
+      <span class="shift-chevron" id="${chevId}">▼</span>
+    </div>
+    <div class="eid-leave-panel" id="${panelId}">
+      <div class="info-row"><span class="info-label">Status</span><span class="eid-leave-badge">✨ Eid Vacation — Not on duty</span></div>
+      <div class="info-row"><span class="info-label">Unicode</span><span class="unicode-chip">${unicode}</span></div>
+      <div class="info-row top"><span class="info-label">Outlet</span><span class="outlet-chip">${outlet}</span></div>
+      <div class="info-row"><span class="info-label">Location</span><a class="map-btn" href="${mapUrl}" target="_blank">📍 Open Google Maps</a></div>
+    </div>
+  </div></div>`;
+}
 
-const indirectOutlets = [
-  { id:'c1', unicode:'96612462113005', outlet:'QAS_Al-Ghada Super Market_DS_MN_BR',      mapUrl:'https://maps.app.goo.gl/sCcHKr1EJTStTtfk7', dayName:'Mohammed Shwahna',       nightName:'Abdelghafour AlHunaidy' },
-  { id:'c2', unicode:'96612462117894', outlet:'QAS_Nakhlath Al Mazaj_SIS(TB)_MN_BR',     mapUrl:'https://maps.app.goo.gl/HBT6Z5mzPKzyP4TUA', dayName:'Mohammed Al Sulaiman',       nightName:'Ebrahim Ali Bati' },
-  { id:'c3', unicode:'966124622652',   outlet:'QAS_Tamimi Al Raas S194_DS_MN_BR',        mapUrl:'https://maps.app.goo.gl/9HCxfXdyjFrSGZeaA', dayName:'Ali Alsubaie',           nightName:'Hamad Khlawe' },
-  { id:'c4', unicode:'966124622651',   outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',         mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8', dayName:'Ayman Sadhan',           nightName:'Yazeed Mohammed Mansour' },
-  { id:'c5', unicode:'966124622650',   outlet:'QAS_Tamimi Buraydah_IP_MN_BR',            mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9', dayName:'Khaled Saleh AL Wakkaa', nightName:'Metab Fahd Amri' },
-  { id:'c6', unicode:'966124622873',   outlet:'QAS_MEED 1107 Omer Khateeb_DS_MN_BR',         mapUrl:'maps.app.goo.gl/Z6muaJxjpzQJ9oe8A?g_st=iw', dayName:'Null',           nightName:'Mohsen Ayoob' },
-  
+// ── DATA ─────────────────────────────────────────────────────────────────
+
+const nightOnlyOutlets = [
+  { id:'c1', unicode:'96612462113005', outlet:'QAS_Al-Ghada Super Market_DS_MN_BR',         mapUrl:'https://maps.app.goo.gl/sCcHKr1EJTStTtfk7',          nightName:'Abdelghafour AlHunaidy' },
+  { id:'c2', unicode:'96612462117894', outlet:'QAS_Nakhlath Al Mazaj_SIS(TB)_MN_BR',        mapUrl:'https://maps.app.goo.gl/HBT6Z5mzPKzyP4TUA',          nightName:'Mohammed Al Sulaiman' },
+  { id:'c3', unicode:'966124622652',   outlet:'QAS_Tamimi Al Raas S194_DS_MN_BR',           mapUrl:'https://maps.app.goo.gl/9HCxfXdyjFrSGZeaA',          nightName:'Hamad Khlawe' },
+  { id:'c4', unicode:'966124622651',   outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',            mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8',          nightName:'Ayman Sadhan' },
+  { id:'c6', unicode:'966124622873',   outlet:'QAS_MEED 1107 Omer Khateeb_DS_MN_BR',        mapUrl:'https://maps.app.goo.gl/pNSnmsthRJtfgyW49',          nightName:'Ebrahim Ali Bati' },
+  { id:'c7', unicode:'9661246221104',  outlet:'QAS_Sasco Palm-10861 Al Rass_DS(KA)_MN_BR', mapUrl:'https://maps.app.goo.gl/h6quWeT6KUacjaHF9?g_st=ipc', nightName:'Ali Alsubaie' },
+];
+
+const dualOutlets = [
+  { id:'c5', unicode:'966124622650', outlet:'QAS_Tamimi Buraydah_IP_MN_BR', mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9', dayName:'Khaled Saleh AL Wakkaa', nightName:'Mohammed Shwahna' },
 ];
 
 const dsPromoters = [
-  { id:'ds1', name:'Mohamed Ahmed Abdelwahab',            unicode:'96612462118585', outlet:'QAS_Sharikath Bayth Almudahin 2_BR-DS(TB)_MN_BR', mapUrl:'https://maps.app.goo.gl/kYu58G7akzsWR3ug9' },
-  { id:'ds2', name:'Yousef Ahmed Hasan', unicode:'96612462118582', outlet:'QAS_Riadat Alostoura 1_BR-DS(TB)_MN_BR', mapUrl:'https://maps.app.goo.gl/ekjP7Lz3UGZPHtGv6?g_st=ic'},
-//  { id:'ds3', name:'Mohamed Ahmed Abdelwahab', unicode:'96612462118583', outlet:'QAS_Riyadat Alostoura 2_BR-DS(TB)_MN_BR',        mapUrl:'https://maps.app.goo.gl/MkXwetmf7fm9zRrQ8?g_st=ic', sickLeave:true },
+  { id:'ds1', name:'Mohsen Ayoob',            unicode:'96612462118585', outlet:'QAS_Sharikath Bayth Almudahin 2_BR-DS(TB)_MN_BR', mapUrl:'https://maps.app.goo.gl/kYu58G7akzsWR3ug9' },
+  { id:'ds2', name:'Yousef Ahmed Hasan',       unicode:'96612462118582', outlet:'QAS_Riadat Alostoura 1_BR-DS(TB)_MN_BR',         mapUrl:'https://maps.app.goo.gl/ekjP7Lz3UGZPHtGv6?g_st=ic' },
+  { id:'ds3', name:'Mohamed Ahmed Abdelwahab', unicode:'96612462118583', outlet:'QAS_Riyadat Alostoura 2_BR-DS(TB)_MN_BR',        mapUrl:'https://maps.app.goo.gl/MkXwetmf7fm9zRrQ8?g_st=ic' },
 ];
 
+const eidLeavePromoters = [
+  { id:'el1', name:'Yazeed Mohammed Mansour', unicode:'966124622651', outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',  mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8' },
+  { id:'el2', name:'Metab Fahd Amri',         unicode:'966124622650', outlet:'QAS_Tamimi Buraydah_IP_MN_BR',     mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9' },
+];
+
+// ── RENDER ───────────────────────────────────────────────────────────────
+
 document.getElementById('indirect-container').innerHTML =
-  indirectOutlets.map(o => buildIndirectBlock(o)).join('');
+  nightOnlyOutlets.map(o => buildNightOnlyBlock(o)).join('') +
+  dualOutlets.map(o => buildDualBlock(o)).join('');
 
 document.getElementById('ds-container').innerHTML =
   dsPromoters.map(p => buildDSBlock(p)).join('');
+
+document.getElementById('eid-leave-container').innerHTML =
+  eidLeavePromoters.map(p => buildEidLeaveBlock(p)).join('');
+
+// ── COUNTER ──────────────────────────────────────────────────────────────
+
+(function updateCounter() {
+  const nightActive = todayIdx !== 5;
+  const dayActive   = todayIdx !== 6;
+  const dsActive    = todayIdx !== 0;
+
+  const totalNight = nightOnlyOutlets.filter(() => nightActive).length
+                   + dualOutlets.filter(() => nightActive).length;
+  const totalDay   = dualOutlets.filter(() => dayActive).length;
+  const totalDS    = dsPromoters.filter(p => dsActive && !p.sickLeave).length;
+  const totalOff   = nightOnlyOutlets.filter(() => !nightActive).length
+                   + dualOutlets.filter(() => !nightActive).length
+                   + dualOutlets.filter(() => !dayActive).length
+                   + dsPromoters.filter(p => !dsActive || p.sickLeave).length
+                   + eidLeavePromoters.length;
+
+  const now = new Date();
+  document.getElementById('counter-total').textContent  = totalNight + totalDay + totalDS;
+  document.getElementById('counter-date').textContent   = now.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('today-day-name').textContent = DAY_NAMES[todayIdx].toUpperCase();
+  document.getElementById('count-night').textContent    = totalNight;
+  document.getElementById('count-day').textContent      = totalDay;
+  document.getElementById('count-ds').textContent       = totalDS;
+  document.getElementById('count-off').textContent      = totalOff;
+})();
 </script>
 </body>
 </html>

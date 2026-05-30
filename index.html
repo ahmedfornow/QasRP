@@ -11,12 +11,10 @@
     --card: #1a1e2e;
     --border: #252a3a;
     --accent: #4f8ef7;
-    --accent2: #f7a44f;
     --accent3: #4ff7a4;
     --accent-night: #9b6bff;
     --text: #e8eaf2;
     --muted: #7a82a0;
-    --day-off-text: #e05c5c;
     --ds-accent: #f74f8e;
     --active-color: #4ff7a4;
     --inactive-color: #e05c5c;
@@ -24,11 +22,8 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Sora', sans-serif;
-    min-height: 100vh;
-    padding-bottom: 60px;
+    background: var(--bg); color: var(--text);
+    font-family: 'Sora', sans-serif; min-height: 100vh; padding-bottom: 60px;
   }
 
   /* ── HEADER ── */
@@ -50,25 +45,18 @@
     letter-spacing: 2.5px; text-transform: uppercase;
     padding: 4px 16px; border-radius: 20px; margin-bottom: 16px;
   }
-  header h1 {
-    font-size: clamp(1.5rem, 4.5vw, 2.6rem);
-    font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1.15;
-  }
+  header h1 { font-size: clamp(1.5rem, 4.5vw, 2.6rem); font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1.15; }
   header h1 span { color: var(--accent); }
-  header p.subtitle {
-    margin-top: 10px; color: var(--muted);
-    font-size: 12.5px; font-weight: 300; letter-spacing: 0.3px;
-  }
+  header p.subtitle { margin-top: 10px; color: var(--muted); font-size: 12.5px; font-weight: 300; }
   .toggle-btn {
     position: absolute; top: 18px; right: 18px;
     background: var(--card); border: 1px solid var(--border);
-    color: var(--text); border-radius: 20px;
-    padding: 6px 14px; font-size: 12px; cursor: pointer;
-    font-family: 'Sora', sans-serif; transition: background .2s;
+    color: var(--text); border-radius: 20px; padding: 6px 14px;
+    font-size: 12px; cursor: pointer; font-family: 'Sora', sans-serif; transition: background .2s;
   }
   .toggle-btn:hover { background: var(--border); }
 
-  /* ── COUNTER CARD ── */
+  /* ── COUNTER ── */
   .counter-wrap { max-width: 960px; margin: 22px auto 0; padding: 0 16px; }
   .counter-card {
     background: var(--card); border: 1px solid var(--border);
@@ -77,22 +65,20 @@
   }
   .counter-main { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 180px; }
   .counter-number {
-    font-size: clamp(2.4rem, 7vw, 3.6rem);
-    font-weight: 700; line-height: 1; color: var(--active-color);
-    font-family: 'JetBrains Mono', monospace; letter-spacing: -1px;
+    font-size: clamp(2.4rem, 7vw, 3.6rem); font-weight: 700; line-height: 1;
+    color: var(--active-color); font-family: 'JetBrains Mono', monospace; letter-spacing: -1px;
   }
   .counter-label-block { display: flex; flex-direction: column; gap: 3px; }
   .counter-label-top { font-size: 13px; font-weight: 600; color: var(--text); }
   .counter-label-sub { font-size: 11px; color: var(--muted); font-weight: 300; }
   .counter-breakdown { display: flex; gap: 10px; flex-wrap: wrap; }
   .breakdown-chip {
-    display: flex; align-items: center; gap: 6px;
-    padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+    border-radius: 8px; font-size: 11px; font-weight: 600;
     border: 1px solid var(--border); background: rgba(255,255,255,0.03);
   }
   .breakdown-chip .chip-count { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; }
   .chip-night .chip-count { color: #c4aaff; }
-  .chip-day   .chip-count { color: #7ab3ff; }
   .chip-ds    .chip-count { color: #ff88bb; }
   .chip-off   .chip-count { color: var(--inactive-color); }
   .counter-divider { width: 1px; height: 48px; background: var(--border); flex-shrink: 0; }
@@ -100,12 +86,9 @@
     font-size: 11px; color: var(--muted); text-align: center;
     display: flex; flex-direction: column; align-items: center; gap: 3px;
   }
-  .today-day {
-    font-size: 18px; font-weight: 700; color: var(--text);
-    font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;
-  }
+  .today-day { font-size: 18px; font-weight: 700; color: var(--text); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
 
-  /* ── SHIFT RULES BAR ── */
+  /* ── RULES BAR ── */
   .rules-bar { max-width: 960px; margin: 14px auto 0; padding: 0 16px; }
   .rules-inner {
     display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 11px 18px;
@@ -143,11 +126,12 @@
   .shift-emoji { font-size: 17px; flex-shrink: 0; }
   .shift-name { font-size: 14px; font-weight: 600; color: #fff; flex: 1; }
   .shift-type-badge { font-size: 9.5px; font-weight: 700; letter-spacing: 1px; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0; }
-  .badge-day   { background: rgba(79,142,247,0.13); color: #7ab3ff; border: 1px solid rgba(79,142,247,0.28); }
   .badge-night { background: rgba(155,107,255,0.13); color: #c4aaff; border: 1px solid rgba(155,107,255,0.28); }
   .badge-ds    { background: rgba(247,79,142,0.13);  color: #ff88bb; border: 1px solid rgba(247,79,142,0.28); }
+  .badge-off   { background: rgba(224,92,92,0.10);   color: #e05c5c; border: 1px solid rgba(224,92,92,0.25); }
   .shift-chevron { color: var(--muted); font-size: 12px; transition: transform .25s; flex-shrink: 0; }
 
+  /* ── INFO PANEL ── */
   .shift-panel {
     display: none; padding: 13px 18px 15px; border-top: 1px solid var(--border);
     background: rgba(0,0,0,0.18); flex-direction: column; gap: 10px;
@@ -158,12 +142,15 @@
   .info-row.top { align-items: flex-start; }
   .info-label { font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); width: 68px; flex-shrink: 0; }
 
-  .active-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
-  .active-badge.yes { background: rgba(79,247,164,0.09); color: var(--active-color); border: 1px solid rgba(79,247,164,0.22); }
-  .active-badge.no  { background: rgba(224,92,92,0.09);  color: var(--inactive-color); border: 1px solid rgba(224,92,92,0.22); }
-  .active-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .active-badge.yes .active-dot { background: var(--active-color); }
-  .active-badge.no  .active-dot { background: var(--inactive-color); }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+  }
+  .status-badge.active { background: rgba(79,247,164,0.09); color: var(--active-color); border: 1px solid rgba(79,247,164,0.22); }
+  .status-badge.off    { background: rgba(224,92,92,0.09);  color: var(--inactive-color); border: 1px solid rgba(224,92,92,0.22); }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .status-badge.active .status-dot { background: var(--active-color); }
+  .status-badge.off    .status-dot { background: var(--inactive-color); }
 
   .unicode-chip { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent3); background: rgba(79,247,164,0.05); border: 1px solid rgba(79,247,164,0.14); padding: 3px 9px; border-radius: 6px; }
   .outlet-chip  { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 3px 9px; border-radius: 6px; word-break: break-all; }
@@ -174,48 +161,20 @@
   }
   .map-btn:hover { background: rgba(79,142,247,0.2); }
 
-  /* ── EID NOTICE ── */
-  .eid-notice { max-width: 960px; margin: 14px auto 0; padding: 0 16px; }
-  .eid-notice-inner {
-    display: flex; align-items: center; gap: 12px; padding: 13px 18px;
-    background: rgba(155,107,255,0.07); border: 1px solid rgba(155,107,255,0.22);
-    border-radius: 10px; flex-wrap: wrap;
-  }
-  .eid-notice-icon { font-size: 20px; flex-shrink: 0; }
-  .eid-notice-text { font-size: 12.5px; color: #c4aaff; line-height: 1.6; flex: 1; }
-  .eid-notice-text strong { color: #dac8ff; font-weight: 700; }
-  .eid-name-tag {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: rgba(155,107,255,0.15); border: 1px solid rgba(155,107,255,0.3);
-    color: #dac8ff; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px;
-  }
-
-  /* ── EID LEAVE ROW ── */
-  .badge-eid-leave {
-    background: rgba(155,107,255,0.13); color: #c4aaff;
-    border: 1px solid rgba(155,107,255,0.28);
-    font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
-    padding: 3px 9px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0;
-  }
-  .eid-leave-row { opacity: 0.72; }
-  .eid-leave-row .shift-name { color: #c4aaff; }
-  .eid-leave-panel {
+  /* ── OFF ROW ── */
+  .off-row { opacity: 0.6; }
+  .off-row .shift-name { color: #e05c5c; }
+  .off-panel {
     display: none; padding: 13px 18px 15px;
-    border-top: 1px solid rgba(155,107,255,0.18);
-    background: rgba(155,107,255,0.05);
-    flex-direction: column; gap: 10px;
+    border-top: 1px solid rgba(224,92,92,0.15);
+    background: rgba(224,92,92,0.04); flex-direction: column; gap: 10px;
   }
-  .eid-leave-panel.open { display: flex; }
-  .eid-leave-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;
-    background: rgba(155,107,255,0.12); color: #c4aaff; border: 1px solid rgba(155,107,255,0.28);
-  }
+  .off-panel.open { display: flex; }
 
   /* ── FOOTER ── */
   footer {
-    text-align: center; color: var(--muted);
-    font-size: 11px; margin-top: 44px; padding: 20px 16px 0;
+    text-align: center; color: var(--muted); font-size: 11px;
+    margin-top: 44px; padding: 20px 16px 0;
     border-top: 1px solid var(--border); line-height: 2;
   }
   footer strong { color: var(--text); }
@@ -223,12 +182,10 @@
   /* ── LIGHT MODE ── */
   body.light { --bg: #f0f2f8; --card: #fff; --border: #dde1ef; --text: #1a1e2e; --muted: #6b7491; }
   body.light header { background: linear-gradient(135deg, #e8edf8, #dce4f5); border-color: #cdd5e8; }
-  body.light .shift-panel { background: rgba(0,0,0,0.02); }
+  body.light .shift-panel, body.light .off-panel { background: rgba(0,0,0,0.02); }
   body.light .outlet-chip { color: #555c7a; }
-  body.light .rules-inner { background: rgba(0,0,0,0.02); }
-  body.light .outlet-label-bar { background: rgba(0,0,0,0.02); }
-  body.light .counter-card { background: #fff; }
-  body.light .breakdown-chip { background: rgba(0,0,0,0.03); }
+  body.light .rules-inner, body.light .outlet-label-bar { background: rgba(0,0,0,0.02); }
+  body.light .counter-card, body.light .breakdown-chip { background: rgba(0,0,0,0.03); }
 
   @media (max-width: 600px) {
     .shift-name { font-size: 13px; }
@@ -243,7 +200,7 @@
   <button class="toggle-btn" onclick="document.body.classList.toggle('light')">🌙 Toggle</button>
   <div class="header-badge">Eid Plan · 2026</div>
   <h1>Qassim – <span>Eid Route Plan</span></h1>
-  <p class="subtitle">Mostly Night Shift &nbsp;·&nbsp; Tap a promoter row to expand details</p>
+  <p class="subtitle">Mostly Night Shift &nbsp;·&nbsp; Tap a row to expand details</p>
 </header>
 
 <!-- COUNTER -->
@@ -266,9 +223,6 @@
       <div class="breakdown-chip chip-night">
         <span>🌙</span><span class="chip-count" id="count-night">—</span><span style="color:var(--muted)">Night</span>
       </div>
-      <div class="breakdown-chip chip-day">
-        <span>☀️</span><span class="chip-count" id="count-day">—</span><span style="color:var(--muted)">Day</span>
-      </div>
       <div class="breakdown-chip chip-ds">
         <span>📋</span><span class="chip-count" id="count-ds">—</span><span style="color:var(--muted)">DS</span>
       </div>
@@ -282,33 +236,18 @@
 <!-- RULES -->
 <div class="rules-bar">
   <div class="rules-inner">
-    <span>☀️ Day <strong>(8AM–4PM)</strong> — off: <strong>Saturday</strong></span>
-    <span>🌙 Night <strong>(4PM–12AM)</strong> — off: <strong>Friday</strong></span>
+    <span>🌙 Night shift <strong>(4PM–12AM)</strong></span>
     <span>📋 Direct Sells — off: <strong>Sunday</strong></span>
-    <span>Friday: Day promoter covers Night shift</span>
   </div>
 </div>
 
-<!-- EID VACATION NOTICE -->
-<div class="eid-notice">
-  <div class="eid-notice-inner">
-    <span class="eid-notice-icon">🌙✨</span>
-    <div class="eid-notice-text">
-      <strong>Eid Vacation:</strong>
-      <span class="eid-name-tag">Yazeed Mohammed Mansour</span> and
-      <span class="eid-name-tag">Metab Fahd Amri</span>
-      are currently on <strong>Eid vacation</strong> and will not be covering any shifts during this period.
-    </div>
-  </div>
-</div>
-
-<!-- INDIRECT SELLS -->
+<!-- NIGHT SHIFT -->
 <div class="section-label">
   <div class="section-label-line"></div>
-  <span class="section-label-text">Indirect Sells</span>
+  <span class="section-label-text">Night Shift — Indirect Sells</span>
   <div class="section-label-line"></div>
 </div>
-<div id="indirect-container"></div>
+<div id="night-container"></div>
 
 <!-- DIRECT SELLS -->
 <div class="section-label">
@@ -318,17 +257,17 @@
 </div>
 <div id="ds-container"></div>
 
-<!-- EID LEAVE -->
+<!-- OFF -->
 <div class="section-label">
   <div class="section-label-line"></div>
-  <span class="section-label-text">🌙 Eid Vacation</span>
+  <span class="section-label-text">Off</span>
   <div class="section-label-line"></div>
 </div>
-<div id="eid-leave-container"></div>
+<div id="off-container"></div>
 
 <footer>
   <p>Qassim Eid Route Plan &nbsp;·&nbsp; 2026</p>
-  <p>☀️ Day off: <strong>Saturday</strong> &nbsp;|&nbsp; 🌙 Night off: <strong>Friday</strong> &nbsp;|&nbsp; 📋 DS off: <strong>Sunday</strong></p>
+  <p>🌙 Night shift <strong>(4PM–12AM)</strong> &nbsp;|&nbsp; 📋 DS off: <strong>Sunday</strong></p>
 </footer>
 
 <script>
@@ -342,25 +281,33 @@ function toggle(panelId, chevId) {
   if (chev) chev.style.transform = panel.classList.contains('open') ? 'rotate(180deg)' : '';
 }
 
-function activeBadge(active) {
-  return active
-    ? `<span class="active-badge yes"><span class="active-dot"></span>Active Today</span>`
-    : `<span class="active-badge no"><span class="active-dot"></span>Off Today</span>`;
-}
-
-function infoPanel(id, { unicode, outlet, mapUrl, active }) {
+function infoPanel(id, { unicode, outlet, mapUrl, status, statusLabel }) {
+  const badgeClass = status === 'active' ? 'active' : 'off';
   return `
   <div class="shift-panel" id="${id}">
-    <div class="info-row"><span class="info-label">Active?</span>${activeBadge(active)}</div>
-    <div class="info-row"><span class="info-label">Unicode</span><span class="unicode-chip">${unicode}</span></div>
-    <div class="info-row top"><span class="info-label">Outlet</span><span class="outlet-chip">${outlet}</span></div>
-    <div class="info-row"><span class="info-label">Location</span><a class="map-btn" href="${mapUrl}" target="_blank">📍 Open Google Maps</a></div>
+    <div class="info-row">
+      <span class="info-label">Status</span>
+      <span class="status-badge ${badgeClass}"><span class="status-dot"></span>${statusLabel}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Unicode</span>
+      <span class="unicode-chip">${unicode}</span>
+    </div>
+    <div class="info-row top">
+      <span class="info-label">Outlet</span>
+      <span class="outlet-chip">${outlet}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Location</span>
+      <a class="map-btn" href="${mapUrl}" target="_blank">📍 Open Google Maps</a>
+    </div>
   </div>`;
 }
 
-function buildNightOnlyBlock(opts) {
-  const { id, unicode, outlet, mapUrl, nightName } = opts;
-  const panelId = id + '_night_panel', chevId = id + '_night_chev';
+// Night shift working block
+function buildNightBlock(opts) {
+  const { id, unicode, outlet, mapUrl, name } = opts;
+  const panelId = id + '_panel', chevId = id + '_chev';
   return `
   <div class="promoter-block"><div class="promoter-wrap">
     <div class="outlet-label-bar">
@@ -369,88 +316,73 @@ function buildNightOnlyBlock(opts) {
     </div>
     <div class="shift-header" onclick="toggle('${panelId}','${chevId}')">
       <span class="shift-emoji">🌙</span>
-      <span class="shift-name">${nightName}</span>
+      <span class="shift-name">${name}</span>
       <span class="shift-type-badge badge-night">Night</span>
       <span class="shift-chevron" id="${chevId}">▼</span>
     </div>
-    ${infoPanel(panelId, { unicode, outlet, mapUrl, active: todayIdx !== 5 })}
+    ${infoPanel(panelId, { unicode, outlet, mapUrl, status:'active', statusLabel:'Active Today' })}
   </div></div>`;
 }
 
-function buildDualBlock(opts) {
-  const { id, unicode, outlet, mapUrl, dayName, nightName } = opts;
-  const dpId = id+'_day_panel', npId = id+'_night_panel';
-  const dcId = id+'_day_chev',  ncId = id+'_night_chev';
-  return `
-  <div class="promoter-block"><div class="promoter-wrap">
-    <div class="outlet-label-bar">
-      <span class="outlet-label-unicode">${unicode}</span>
-      <span class="outlet-label-name">${outlet}</span>
-    </div>
-    <div class="shift-header" onclick="toggle('${dpId}','${dcId}')">
-      <span class="shift-emoji">☀️</span><span class="shift-name">${dayName}</span>
-      <span class="shift-type-badge badge-day">Day</span>
-      <span class="shift-chevron" id="${dcId}">▼</span>
-    </div>
-    ${infoPanel(dpId, { unicode, outlet, mapUrl, active: todayIdx !== 6 })}
-    <div class="shift-divider"></div>
-    <div class="shift-header" onclick="toggle('${npId}','${ncId}')">
-      <span class="shift-emoji">🌙</span><span class="shift-name">${nightName}</span>
-      <span class="shift-type-badge badge-night">Night</span>
-      <span class="shift-chevron" id="${ncId}">▼</span>
-    </div>
-    ${infoPanel(npId, { unicode, outlet, mapUrl, active: todayIdx !== 5 })}
-  </div></div>`;
-}
-
+// DS block
 function buildDSBlock(opts) {
   const { id, name, unicode, outlet, mapUrl, sickLeave } = opts;
-  const panelId = id+'_panel', chevId = id+'_chev';
+  const active = todayIdx !== 0 && !sickLeave;
+  const panelId = id + '_panel', chevId = id + '_chev';
   return `
   <div class="promoter-block"><div class="promoter-wrap">
     <div class="shift-header" onclick="toggle('${panelId}','${chevId}')">
-      <span class="shift-emoji">📋</span><span class="shift-name">${name}</span>
+      <span class="shift-emoji">📋</span>
+      <span class="shift-name">${name}</span>
       <span class="shift-type-badge badge-ds">DS</span>
       <span class="shift-chevron" id="${chevId}">▼</span>
     </div>
-    ${infoPanel(panelId, { unicode, outlet, mapUrl, active: todayIdx !== 0 && !sickLeave })}
+    ${infoPanel(panelId, { unicode, outlet, mapUrl, status: active ? 'active' : 'off', statusLabel: active ? 'Active Today' : 'Off Today' })}
   </div></div>`;
 }
 
-function buildEidLeaveBlock(opts) {
-  const { id, name, unicode, outlet, mapUrl } = opts;
-  const panelId = id+'_eid_panel', chevId = id+'_eid_chev';
+// Off block
+function buildOffBlock(opts) {
+  const { id, name, unicode, outlet, mapUrl, reason } = opts;
+  const panelId = id + '_panel', chevId = id + '_chev';
   return `
   <div class="promoter-block"><div class="promoter-wrap">
-    <div class="shift-header eid-leave-row" onclick="toggle('${panelId}','${chevId}')">
-      <span class="shift-emoji">🌙</span>
+    <div class="shift-header off-row" onclick="toggle('${panelId}','${chevId}')">
+      <span class="shift-emoji">🌴</span>
       <span class="shift-name">${name}</span>
-      <span class="badge-eid-leave">Eid Leave</span>
+      <span class="shift-type-badge badge-off">${reason}</span>
       <span class="shift-chevron" id="${chevId}">▼</span>
     </div>
-    <div class="eid-leave-panel" id="${panelId}">
-      <div class="info-row"><span class="info-label">Status</span><span class="eid-leave-badge">✨ Eid Vacation — Not on duty</span></div>
-      <div class="info-row"><span class="info-label">Unicode</span><span class="unicode-chip">${unicode}</span></div>
-      <div class="info-row top"><span class="info-label">Outlet</span><span class="outlet-chip">${outlet}</span></div>
-      <div class="info-row"><span class="info-label">Location</span><a class="map-btn" href="${mapUrl}" target="_blank">📍 Open Google Maps</a></div>
+    <div class="off-panel" id="${panelId}">
+      <div class="info-row">
+        <span class="info-label">Status</span>
+        <span class="status-badge off"><span class="status-dot"></span>Off — ${reason}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Unicode</span>
+        <span class="unicode-chip">${unicode}</span>
+      </div>
+      <div class="info-row top">
+        <span class="info-label">Outlet</span>
+        <span class="outlet-chip">${outlet}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Location</span>
+        <a class="map-btn" href="${mapUrl}" target="_blank">📍 Open Google Maps</a>
+      </div>
     </div>
   </div></div>`;
 }
 
 // ── DATA ─────────────────────────────────────────────────────────────────
 
-const nightOnlyOutlets = [
-  { id:'c1', unicode:'96612462113005', outlet:'QAS_Al-Ghada Super Market_DS_MN_BR',         mapUrl:'https://maps.app.goo.gl/sCcHKr1EJTStTtfk7',          nightName:'Abdelghafour AlHunaidy' },
-  { id:'c2', unicode:'96612462117894', outlet:'QAS_Nakhlath Al Mazaj_SIS(TB)_MN_BR',        mapUrl:'https://maps.app.goo.gl/HBT6Z5mzPKzyP4TUA',          nightName:'Mohammed Al Sulaiman' },
-  { id:'c3', unicode:'966124622652',   outlet:'QAS_Tamimi Al Raas S194_DS_MN_BR',           mapUrl:'https://maps.app.goo.gl/9HCxfXdyjFrSGZeaA',          nightName:'Hamad Khlawe' },
-  { id:'c4', unicode:'966124622651',   outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',            mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8',          nightName:'Ayman Sadhan' },
-  { id:'c6', unicode:'966124622873',   outlet:'QAS_MEED 1107 Omer Khateeb_DS_MN_BR',        mapUrl:'https://maps.app.goo.gl/pNSnmsthRJtfgyW49',          nightName:'Ebrahim Ali Bati' },
-  { id:'c7', unicode:'9661246221104',  outlet:'QAS_Sasco Palm-10861 Al Rass_DS(KA)_MN_BR', mapUrl:'https://maps.app.goo.gl/h6quWeT6KUacjaHF9?g_st=ipc', nightName:'Ali Alsubaie' },
-  { id:'c8', unicode:'96612462115917', outlet:'QAS_Sharika Mazaj Al Qassim Lil Thijarah_DS_MN_BR', mapUrl:'https://maps.app.goo.gl/FBQZvPxyT1btb4om7', nightName: 'Mohammed Shwahna' }
-];
-
-const dualOutlets = [
-  { id:'c5', unicode:'966124622650', outlet:'QAS_Tamimi Buraydah_IP_MN_BR', mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9', dayName:'-', nightName:'Khaled Saleh AL Wakkaa' },
+const nightPromoters = [
+  { id:'n1', name:'Abdelghafour AlHunaidy', unicode:'96612462113005', outlet:'QAS_Al-Ghada Super Market_DS_MN_BR',         mapUrl:'https://maps.app.goo.gl/sCcHKr1EJTStTtfk7' },
+  { id:'n2', name:'Mohammed Al Sulaiman',   unicode:'96612462117894', outlet:'QAS_Nakhlath Al Mazaj_SIS(TB)_MN_BR',        mapUrl:'https://maps.app.goo.gl/HBT6Z5mzPKzyP4TUA' },
+  { id:'n3', name:'Hamad Khlawe',           unicode:'966124622652',   outlet:'QAS_Tamimi Al Raas S194_DS_MN_BR',           mapUrl:'https://maps.app.goo.gl/9HCxfXdyjFrSGZeaA' },
+  { id:'n4', name:'Ayman Sadhan',           unicode:'966124622651',   outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',            mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8' },
+  { id:'n5', name:'Mohammed Shwahna',       unicode:'966124622650',   outlet:'QAS_Tamimi Buraydah_IP_MN_BR',               mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9' },
+  { id:'n6', name:'Ali Alsubaie',           unicode:'9661246221104',  outlet:'QAS_Sasco Palm-10861 Al Rass_DS(KA)_MN_BR', mapUrl:'https://maps.app.goo.gl/h6quWeT6KUacjaHF9?g_st=ipc' },
 ];
 
 const dsPromoters = [
@@ -459,46 +391,38 @@ const dsPromoters = [
   { id:'ds3', name:'Mohamed Ahmed Abdelwahab', unicode:'96612462118583', outlet:'QAS_Riyadat Alostoura 2_BR-DS(TB)_MN_BR',        mapUrl:'https://maps.app.goo.gl/MkXwetmf7fm9zRrQ8?g_st=ic' },
 ];
 
-const eidLeavePromoters = [
-  { id:'el1', name:'Yazeed Mohammed Mansour', unicode:'966124622651', outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',  mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8' },
-  { id:'el2', name:'Metab Fahd Amri',         unicode:'966124622650', outlet:'QAS_Tamimi Buraydah_IP_MN_BR',     mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9' },
+const offPromoters = [
+  { id:'o1', name:'Khaled Saleh AL Wakkaa',   unicode:'966124622650', outlet:'QAS_Tamimi Buraydah_IP_MN_BR',               mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9',          reason:'Off' },
+  { id:'o2', name:'Ebrahim Ali Bati',          unicode:'966124622873', outlet:'QAS_MEED 1107 Omer Khateeb_DS_MN_BR',        mapUrl:'https://maps.app.goo.gl/pNSnmsthRJtfgyW49',           reason:'Off' },
+  { id:'o3', name:'Metab Fahd Amri',           unicode:'966124622650', outlet:'QAS_Tamimi Buraydah_IP_MN_BR',               mapUrl:'https://maps.app.goo.gl/md1XH5JNJK5HVV4U9',          reason:'Eid Leave' },
+  { id:'o4', name:'Yazeed Mohammed Mansour',   unicode:'966124622651', outlet:'QAS_Tamimi Unaizah 190_DS_MN_BR',            mapUrl:'https://maps.app.goo.gl/BHZHRvYjNpZHDnoo8',          reason:'Eid Leave' },
 ];
 
 // ── RENDER ───────────────────────────────────────────────────────────────
 
-document.getElementById('indirect-container').innerHTML =
-  nightOnlyOutlets.map(o => buildNightOnlyBlock(o)).join('') +
-  dualOutlets.map(o => buildDualBlock(o)).join('');
+document.getElementById('night-container').innerHTML =
+  nightPromoters.map(p => buildNightBlock(p)).join('');
 
 document.getElementById('ds-container').innerHTML =
   dsPromoters.map(p => buildDSBlock(p)).join('');
 
-document.getElementById('eid-leave-container').innerHTML =
-  eidLeavePromoters.map(p => buildEidLeaveBlock(p)).join('');
+document.getElementById('off-container').innerHTML =
+  offPromoters.map(p => buildOffBlock(p)).join('');
 
 // ── COUNTER ──────────────────────────────────────────────────────────────
 
 (function updateCounter() {
-  const nightActive = todayIdx !== 5;
-  const dayActive   = todayIdx !== 6;
-  const dsActive    = todayIdx !== 0;
-
-  const totalNight = nightOnlyOutlets.filter(() => nightActive).length
-                   + dualOutlets.filter(() => nightActive).length;
-  const totalDay   = dualOutlets.filter(() => dayActive).length;
+  const dsActive  = todayIdx !== 0;
+  const totalNight = nightPromoters.length;
   const totalDS    = dsPromoters.filter(p => dsActive && !p.sickLeave).length;
-  const totalOff   = nightOnlyOutlets.filter(() => !nightActive).length
-                   + dualOutlets.filter(() => !nightActive).length
-                   + dualOutlets.filter(() => !dayActive).length
-                   + dsPromoters.filter(p => !dsActive || p.sickLeave).length
-                   + eidLeavePromoters.length;
+  const totalOff   = offPromoters.length + dsPromoters.filter(p => !dsActive || p.sickLeave).length;
+  const totalWorking = totalNight + totalDS;
 
   const now = new Date();
-  document.getElementById('counter-total').textContent  = totalNight + totalDay + totalDS;
+  document.getElementById('counter-total').textContent  = totalWorking;
   document.getElementById('counter-date').textContent   = now.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
   document.getElementById('today-day-name').textContent = DAY_NAMES[todayIdx].toUpperCase();
   document.getElementById('count-night').textContent    = totalNight;
-  document.getElementById('count-day').textContent      = totalDay;
   document.getElementById('count-ds').textContent       = totalDS;
   document.getElementById('count-off').textContent      = totalOff;
 })();
